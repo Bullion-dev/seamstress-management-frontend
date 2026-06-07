@@ -1,6 +1,14 @@
 import Topbar from "./Topbar";
+import { useState, useEffect } from 'react'
+
+
 
 function Customer(){
+  const [customers, setCustomers] = useState([]);
+  useEffect(() => {
+const saved= JSON.parse(localStorage.getItem('customers') || '[]')
+setCustomers(saved);
+  },[]);
     return(
         <div>
 <Topbar 
@@ -39,42 +47,18 @@ buttonPath="/add-customers"
           </thead>
           <tbody className="divide-y divide-gray-200">
             {/* row 1 */}
-            <tr className="hover:bg-gray-50">
-              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Mary Johnson</td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">055 981 0302</td>
+           { customers.map((customer, index) => (
+            <tr key={index} className="hover:bg-gray-50">
+              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{customer.fullName}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{customer.phoneNumber}</td>
               <td className="px-6 py-4 whitespace-nowrap">
                 <span className="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-status text-gray-600">
-                  2 Orders
+                  {customer.status}
                 </span>
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-golden">View All</td>
             </tr>
-
-           {/* row 2 */}
-            <tr className="hover:bg-gray-50">
-              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Mary Johnson</td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">054 931 0402</td>
-              <td className="px-6 py-4 whitespace-nowrap">
-                <span className="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-status-100 text-gray-500">
-                  No Order
-                </span>
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-golden">View All</td>
-            </tr>
-
-            {/* row 3 */}
-            <tr className="hover:bg-gray-50">
-              {/*whitespace-nowrap prevents text from wrapping onto a new line*/}
-              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">J.Cole</td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">050 980 0300</td>
-              <td className="px-6 py-4 whitespace-nowrap">
-                <span className="px-2 py-1 inline-flex text-xs leading-5{/*line height*/}  font-semibold rounded-full bg-status-100 text-gray-500">
-                  No Order
-                </span>
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-golden">View All</td>
-            </tr>
-
+))}
           </tbody>
         </table>
       </div>
