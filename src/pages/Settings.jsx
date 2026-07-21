@@ -1,4 +1,4 @@
-import Topbar from "./Topbar";
+import Topbar from "../components/Topbar";
 
 
 function Settings(){

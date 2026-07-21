@@ -1,4 +1,4 @@
-function RecentOrders({title, columns, rows, statusIndex }) {
+function RecentOrders({title, columns, rows, statusIndex, onDelete, onRowClick }) {
   const statusColors = {
     'Pending': 'bg-yellow-100 text-yellow-800',
     'In Progress': 'bg-blue-100 text-blue-800',
@@ -25,7 +25,12 @@ function RecentOrders({title, columns, rows, statusIndex }) {
           </thead>
           <tbody className="divide-y divide-gray-200">
             {rows.map((row, rowIndex) => (
-               <tr key={rowIndex} className="hover:bg-gray-50">
+              // When a row is clicked, call onRowClick with the row index//
+// onRowClick && means only run if onRowClick was passed//
+// cursor-pointer shows hand cursor so user knows it's clickable //
+               <tr key={rowIndex}
+               onClick = { () => onRowClick && onRowClick(rowIndex)}
+               className="hover:bg-gray-50 cursor-pointer">
                 {row.map((cell, cellIndex) => (
                   <td key={cellIndex} className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                     {cellIndex === statusIndex ? (
@@ -37,6 +42,20 @@ function RecentOrders({title, columns, rows, statusIndex }) {
                     )}
                   </td>
                 ))}
+
+                  {onDelete && (
+  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+    <button 
+      onClick={(e) => {
+        e.stopPropagation();
+        onDelete(rowIndex)}}
+      className="text-red-500 hover:text-red-700 font-medium"
+    >
+      Delete
+    </button>
+  </td>
+)}
+
               </tr>
             ))}
           </tbody>

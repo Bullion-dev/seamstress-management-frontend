@@ -1,13 +1,22 @@
-import FormTopbar from "./FormTopbar";
-import InputField from "./InputField";
+import FormTopbar from "../components/FormTopbar";
+import InputField from "../components/InputField";
 import {useState } from 'react';
 import {useNavigate} from 'react-router-dom'
+import { useContext } from "react";
+import { AppContext } from "../context/AppContext";
 
 function AddCustomers(){
-
+    //useContext is like a card that gives you access to AppContext which is a book. so the whole context is like
+    //borrowing from a library
+const {customers,setCustomers} = useContext(AppContext);
 const navigate = useNavigate();
 // function for when save button is clicked //
 function handleSave(){
+  // Check if required fields are filled
+  if (!fullName || !phoneNumber) {
+    alert('Please fill in Full Name and Phone Number');
+    return; // stop here, don't save
+  }
     // the information in object form //
     const newCustomers={
         fullName,
@@ -32,6 +41,7 @@ function handleSave(){
     // Adding the new info to the notebook, also if there's nothing in the object, open a new empty object //
     const existing = JSON.parse(localStorage.getItem('customers') || '[]')
     existing.push(newCustomers)
+    setCustomers(existing); //update context
     // when you're finally reading from the notebook //
     localStorage.setItem('customers', JSON.stringify(existing))
     navigate('/customers')

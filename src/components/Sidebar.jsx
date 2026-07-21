@@ -1,4 +1,7 @@
 import { NavLink } from 'react-router-dom';
+import { useContext } from "react";// why? because, i want to open a backpack//
+import { AppContext } from "../context/AppContext";//this is the backpack i want//
+
 function Sidebar(){
   const links = [
     { name: 'Dashboard', path: '/' },

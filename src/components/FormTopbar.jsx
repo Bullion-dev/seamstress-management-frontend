@@ -15,7 +15,7 @@ function FormTopbar({backText, backPath, title, cancelPath, saveText, onSave}){
         Cancel
         </button>
     {saveText && (
-    <button onClick={onSave}
+    <button onClick={onSave} 
     className="bg-golden hover:bg-golden-100 text-black font-medium px-6 py-2 rounded-lg shadow-md transition-all duration-200">
         {saveText}
       </button>

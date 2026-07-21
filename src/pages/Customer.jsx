@@ -1,14 +1,24 @@
-import Topbar from "./Topbar";
-import { useState, useEffect } from 'react'
+import Topbar from "../components/Topbar";
+import { useContext } from "react";
+import { AppContext } from "../context/AppContext";
 
 
 
 function Customer(){
-  const [customers, setCustomers] = useState([]);
-  useEffect(() => {
-const saved= JSON.parse(localStorage.getItem('customers') || '[]')
-setCustomers(saved);
-  },[]);
+  const {customers, setCustomers , orders} = useContext(AppContext);
+
+  // DELETE FUNCTION - removes a customer from the list
+  const handleDelete = (index) => {
+    // Filter through customers and keep only the ones NOT at this index
+    const updated = customers.filter((_, i) => i !== index);
+    
+    // Update Context so all pages see the change immediately
+    setCustomers(updated);
+    
+    // Save to Local Storage so it persists even after refresh
+    localStorage.setItem('customers', JSON.stringify(updated));
+  };
+  
     return(
         <div>
 <Topbar 
@@ -53,10 +63,17 @@ buttonPath="/add-customers"
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{customer.phoneNumber}</td>
               <td className="px-6 py-4 whitespace-nowrap">
                 <span className="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-status text-gray-600">
-                  {customer.status}
+                 { `${orders.filter(order => order.customerNames === customer.fullName).length} Orders`}
                 </span>
               </td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-golden">View All</td>
+              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+  <button 
+    onClick={() => handleDelete(index)}
+    className="text-red-500 hover:text-red-700 font-medium"
+  >
+    Delete
+  </button>
+</td>
             </tr>
 ))}
           </tbody>
