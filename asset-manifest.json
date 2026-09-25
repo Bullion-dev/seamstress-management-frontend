@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/seamstress-management-frontend/static/css/main.c0e3c71c.css",
+    "main.js": "/seamstress-management-frontend/static/js/main.12c52d4b.js",
+    "index.html": "/seamstress-management-frontend/index.html",
+    "main.c0e3c71c.css.map": "/seamstress-management-frontend/static/css/main.c0e3c71c.css.map",
+    "main.12c52d4b.js.map": "/seamstress-management-frontend/static/js/main.12c52d4b.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.c0e3c71c.css",
+    "static/js/main.12c52d4b.js"
+  ]
+}
